@@ -97,7 +97,7 @@ let runBooth = function (M, Q, draw = true) {
 }
 
 
-let runDivisionRestoring = function()
+// let runDivisionRestoring = function()
 module.exports = {
     runBoothRadix4,
     runBooth
