@@ -1,14 +1,14 @@
 import { toBinary } from './util';
 
-let insertBoothRadix4Row = function (A, Q, QNEG, COUNT, OP, M, shift = false) {
+export function insertBoothRadix4Row(A, Q, QNEG, COUNT, OP, M, shift = false, bits = 8) {
     let row = document.createElement('tr');
     row.innerHTML = `
-    <td>${toBinary(A, 9)}</td>
-    <td>${toBinary(Q, 8)}</td>
+    <td>${toBinary(A, bits + 1)}</td>
+    <td>${toBinary(Q, bits)}</td>
     <td>${toBinary(QNEG, 1)}</td>
-    <td>${toBinary(COUNT, 2)}</td>
+    <td>${toBinary(COUNT, bits / 2)}</td>
     <td>${OP}</td>
-    <td>${toBinary(M, 8)}</td>
+    <td>${toBinary(M, bits)}</td>
     `;
 
     if (shift) {
@@ -18,15 +18,15 @@ let insertBoothRadix4Row = function (A, Q, QNEG, COUNT, OP, M, shift = false) {
 
 }
 
-let insertBoothRow = function (A, Q, QNEG, COUNT, OP, M, shift = false) {
+export function insertBoothRow(A, Q, QNEG, COUNT, OP, M, shift = false, bits = 8) {
     let row = document.createElement('tr');
     row.innerHTML = `
-    <td>${toBinary(A, 8)}</td>
-    <td>${toBinary(Q, 8)}</td>
+    <td>${toBinary(A, bits)}</td>
+    <td>${toBinary(Q, bits)}</td>
     <td>${toBinary(QNEG, 1)}</td>
-    <td>${toBinary(COUNT, 3)}</td>
+    <td>${toBinary(COUNT, Math.log2(bits))}</td>
     <td>${OP}</td>
-    <td>${toBinary(M, 8)}</td>
+    <td>${toBinary(M, bits)}</td>
     `;
 
     if (shift) {
@@ -36,7 +36,36 @@ let insertBoothRow = function (A, Q, QNEG, COUNT, OP, M, shift = false) {
 
 }
 
-module.exports = {
-    insertBoothRadix4Row,
-    insertBoothRow
+export function insertDivisionRestoringRow(A, Q, COUNT, OP, M, lastRowInCount = false, bits = 8) {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+    <td>${toBinary(A, bits + 1)}</td>
+    <td>${toBinary(Q, bits)}</td>
+    <td>${toBinary(COUNT, Math.log2(bits))}</td>
+    <td>${OP}</td>
+    <td>${toBinary(M, bits + 1)}</td>
+    `;
+
+    if (lastRowInCount) {
+        row.classList.add('has-underline');
+    }
+    document.querySelector('#division-restoring tbody').appendChild(row);
+
+}
+
+export function insertDivisionNonRestoringRow(A, Q, COUNT, OP, M, lastRowInCount = false, bits = 8) {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+    <td>${toBinary(A, bits + 1)}</td>
+    <td>${toBinary(Q, bits)}</td>
+    <td>${toBinary(COUNT, Math.ceil(Math.log2(bits)))}</td>
+    <td>${OP}</td>
+    <td>${toBinary(M, bits)}</td>
+    `;
+
+    if (lastRowInCount) {
+        row.classList.add('has-underline');
+    }
+    document.querySelector('#division-non-restoring tbody').appendChild(row);
+
 }

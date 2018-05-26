@@ -1,7 +1,7 @@
-import { insertBoothRadix4Row, insertBoothRow } from './renderer';
-import { getLastBits, toBinary, consoleBinaryPrint } from './util';
+import { insertBoothRadix4Row, insertBoothRow, insertDivisionRestoringRow, insertDivisionNonRestoringRow } from './renderer';
+import { getLastBits, toBinary, consoleBinaryPrint, fillOnes } from './util';
 
-let runBoothRadix4 = function (M, Q, draw = true) {
+export function runBoothRadix4(M, Q, draw = true, bits = 8) {
     let A = 0;
     let COUNT = 0;
     let QNEG = 0;
@@ -12,49 +12,49 @@ let runBoothRadix4 = function (M, Q, draw = true) {
         let QT = toBinary(((getLastBits(Q, 2)) << 1) + QNEG, 3);
         if (QT === '001' || QT === '010') {
             if (draw) {
-                insertBoothRadix4Row(A, Q, QNEG, COUNT, "+M", M);
+                insertBoothRadix4Row(A, Q, QNEG, COUNT, "+M", M, false, bits);
             }
             A += M;
         } else if (QT === '101' || QT === '110') {
             if (draw) {
-                insertBoothRadix4Row(A, Q, QNEG, COUNT, "-M", M);
+                insertBoothRadix4Row(A, Q, QNEG, COUNT, "-M", M), false, bits;
             }
             A -= M;
         } else if (QT === '011') {
             if (draw) {
-                insertBoothRadix4Row(A, Q, QNEG, COUNT, "+2M", M);
+                insertBoothRadix4Row(A, Q, QNEG, COUNT, "+2M", M, false, bits);
             }
             A += 2 * M;
         } else if (QT === '100') {
             if (draw) {
-                insertBoothRadix4Row(A, Q, QNEG, COUNT, "-2M", M);
+                insertBoothRadix4Row(A, Q, QNEG, COUNT, "-2M", M, false, bits);
             }
             A -= 2 * M;
         }
-        let shiftAux = Number(getLastBits(A, 9)) << 8;
-        shiftAux += getLastBits(Q, 8);
+        let shiftAux = getLastBits(A, bits + 1) << bits;
+        shiftAux += getLastBits(Q, bits);
         shiftAux = shiftAux << 1;
         shiftAux += getLastBits(QNEG, 1);
         shiftAux = shiftAux >> 2;
-        A = shiftAux >> 9;
-        A = A | (((A >> 6) & 1)) << 7 | (((A >> 6) & 1)) << 8;
-        Q = shiftAux >> 1 & ((1 << 8) - 1);
+        A = shiftAux >> (bits + 1);
+        A = A | (((A >> (bits - 2)) & 1)) << (bits - 1) | (((A >> (bits - 2)) & 1)) << bits;
+        Q = shiftAux >> 1 & ((1 << bits) - 1);
         QNEG = shiftAux & 1;
 
         if (draw) {
-            insertBoothRadix4Row(A, Q, QNEG, COUNT, "SHIFT", M, true);
+            insertBoothRadix4Row(A, Q, QNEG, COUNT, "SHIFT", M, true, bits);
         }
-    } while (COUNT++ < 3)
-    if (A >> 8 === 1) {
-        return (((1 << 17) - 1) << 17) + ((A << 8) + Q);
+    } while (COUNT++ < ((bits / 2) - 1))
+    if (A >> bits === 1) {
+        return (((1 << (bits * 2 + 1)) - 1) << (bits * 2 + 1)) + ((A << bits) + Q);
 
     } else {
-        return ((A << 8) + Q);
+        return ((A << bits) + Q);
 
     }
 }
 
-let runBooth = function (M, Q, draw = true) {
+export function runBooth(Q, M, draw = true, bits = 8) {
     let A = 0;
     let QNEG = 0;
     let COUNT = 0;
@@ -66,39 +66,135 @@ let runBooth = function (M, Q, draw = true) {
         if (QT === '10') {
             A -= M;
             if (draw) {
-                insertBoothRow(A, Q, QNEG, COUNT, '-M', M);
+                insertBoothRow(A, Q, QNEG, COUNT, '-M', M, false, bits);
             }
         } else if (QT === '01') {
             A += M;
             if (draw) {
-                insertBoothRow(A, Q, QNEG, COUNT, '+M', M);
+                insertBoothRow(A, Q, QNEG, COUNT, '+M', M, false, bits);
             }
         }
 
-        let shiftAux = getLastBits(A, 8) << 8;
-        shiftAux += getLastBits(Q, 8);
+        let shiftAux = getLastBits(A, bits) << bits;
+        shiftAux += getLastBits(Q, bits);
         shiftAux = shiftAux << 1;
         shiftAux += getLastBits(QNEG, 1);
         shiftAux = shiftAux >> 1;
-        A = shiftAux >> 9;
-        A = A | (((A >> 6) & 1)) << 7;
-        Q = shiftAux >> 1 & ((1 << 8) - 1);
+        A = shiftAux >> (bits + 1);
+        A = A | (((A >> (bits - 2)) & 1)) << (bits - 1);
+        Q = shiftAux >> 1 & ((1 << bits) - 1);
         QNEG = shiftAux & 1;
         if (draw) {
-            insertBoothRow(A, Q, QNEG, COUNT, "SHIFT", M, true);
+            insertBoothRow(A, Q, QNEG, COUNT, "SHIFT", M, true, bits);
         }
-    } while (COUNT++ < 7);
-    if (A >> 7 === 1) {
-        return (((1 << 16) - 1) << 16) + ((A << 8) + Q);
+    } while (COUNT++ < (bits - 1));
+    if (A >> (bits - 1) === 1) {
+        return (((1 << (2 * bits)) - 1) << (2 * bits)) + ((A << bits) + Q);
 
     } else {
-        return ((A << 8) + Q);
+        return ((A << bits) + Q);
+    }
+}
+
+export function runRestoring(Q, M, draw = true, bits = 8) {
+    let A = 0;
+    let COUNT = 0;
+    if (draw) {
+        document.querySelector('#division-restoring tbody').innerHTML = '';
+        insertDivisionRestoringRow(A, Q, COUNT, 'initial', M, false, bits);
+    }
+    do {
+        let AQ = (A << bits) + Q;
+        AQ = AQ << 1;
+        A = AQ >>> bits;
+        Q = AQ & fillOnes(bits);
+        if (draw) {
+            insertDivisionRestoringRow(A, Q, COUNT, 'SHIFT LEFT AQ', M, false, bits);
+        }
+        A -= M;
+        if (draw) {
+            insertDivisionRestoringRow(A, Q, COUNT, '-M', M, false, bits);
+        }
+        if (((A & (1 << bits)) >> bits) == 0) {
+            Q = Q | 1;
+            if (draw) {
+                insertDivisionRestoringRow(A, Q, COUNT, 'Q[0]=1', M, true, bits);
+            }
+        } else {
+            Q = (Q >>> 1) << 1;
+            A += M;
+            if (draw) {
+                insertDivisionRestoringRow(A, Q, COUNT, 'Q[0]=0 & restore A', M, true, bits);
+            }
+        }
+    } while (COUNT++ < (bits - 1))
+
+    return {
+        quotient: Q,
+        remainder: A
     }
 }
 
 
-// let runDivisionRestoring = function()
-module.exports = {
-    runBoothRadix4,
-    runBooth
+export function runNonRestoring(Q, M, draw = true, bits = 8) {
+    let A = 0;
+    let COUNT = 0;
+    if (draw) {
+        document.querySelector('#division-non-restoring tbody').innerHTML = '';
+        insertDivisionNonRestoringRow(A, Q, COUNT, 'initial', M, false, bits);
+    }
+    do {
+
+        if (((A & (1 << bits)) >> bits) == 0) {
+            let AQ = (A << bits) + Q;
+            AQ = AQ << 1;
+            A = AQ >>> bits;
+            Q = AQ & fillOnes(bits);
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, 'SHIFT LEFT AQ', M, false, bits);
+            }
+
+            A -= M;
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, '-M', M, false, bits);
+            }
+
+        } else {
+            let AQ = (A << bits) + Q;
+            AQ = AQ << 1;
+            A = AQ >>> bits;
+            Q = AQ & fillOnes(bits);
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, 'SHIFT LEFT AQ', M, false, bits);
+            }
+
+            A += M;
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, '+M', M, false, bits);
+            }
+
+        }
+        if (((A & (1 << bits)) >> bits) == 0) {
+            Q = Q | 1;
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, 'Q[0] = 1', M, true, bits);
+            }
+        } else {
+            Q = (Q >>> 1) << 1;
+            if (draw) {
+                insertDivisionNonRestoringRow(A, Q, COUNT, 'Q[0] = 0', M, true, bits);
+            }
+        }
+    } while (COUNT++ < (bits - 1));
+
+    if (((A & (1 << bits)) >> bits) == 1) {
+        A += M;
+        if (draw) {
+            insertDivisionNonRestoringRow(A, Q, COUNT, 'CORRECTION', M, true, bits);
+        }
+    }
+    return {
+        quotient: getLastBits(Q, bits),
+        remainder: getLastBits(A, bits + 1)
+    }
 }

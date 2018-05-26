@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run compile && mocha --require babel-core/register",
-    "compile": "babel --presets es2015 -d lib/ src/"
+    "compile": "babel --presets es2015 -d lib/ src/",
+    "start" : "parcel src/index.html"
   },
   "author": "",
   "license": "ISC",
