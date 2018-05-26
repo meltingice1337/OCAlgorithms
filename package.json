@@ -6,15 +6,18 @@
   "scripts": {
     "test": "npm run compile && mocha --require babel-core/register",
     "compile": "babel --presets es2015 -d lib/ src/",
-    "start" : "parcel src/index.html"
+    "start": "parcel src/index.html"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "autoprefixer": "^8.5.1",
     "babel-polyfill": "^6.26.0",
+    "bootstrap": "^4.1.1",
     "chai": "^4.1.2",
     "jquery": "^3.3.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

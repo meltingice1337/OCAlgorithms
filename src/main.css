@@ -1,20 +1,17 @@
-table {
-    border-collapse: collapse;
-}
-
-table, th {
-    border: 1px solid black;
-}
 
 th, td {
-    padding: 10px;
     text-align: center;
 }
 
-td {
-    border-right: 1px solid black;
+.table td {
+    border-top: 0;
+    border-bottom: 0;
 }
 
 .has-underline {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.container {
+    padding-top: 15px;  
 }

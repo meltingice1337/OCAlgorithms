@@ -198,3 +198,27 @@ export function runNonRestoring(Q, M, draw = true, bits = 8) {
         remainder: getLastBits(A, bits + 1)
     }
 }
+
+
+export function runRadix4Srt(A, B, draw = true, bits = 8) {
+    let P = 0;
+    let k = 0;
+    while ((B & 0x80) != 0) {
+        B = B << 1;
+        k++;
+    }
+    const b = (B >> (8 - 4)) & 0xF;
+    B = B >> k;
+
+    let PA = (P << 8) + A;
+    PA = PA << K;
+    P = (PA >> 8) & 0XFF;
+    A = PA & 0xFF;
+
+    let q = (P >> (8 - 6)) & 0x3F;
+
+    PA = (P << 8) + A;
+    PA = PA << q;
+    P = (PA >> 8) & 0XFF;
+    A = PA & 0xFF;
+}
