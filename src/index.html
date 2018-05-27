@@ -7,8 +7,8 @@
     <title>Pagina</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="main.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
 </head>
 
 <body>
@@ -32,63 +32,155 @@
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-booth-radix4" role="tabpanel" aria-labelledby="pills-booth-radix4-tab">.rad4..</div>
-            <div class="tab-pane fade" id="pills-booth" role="tabpanel" aria-labelledby="pills-booth-tab">bii</div>
-            <div class="tab-pane fade" id="pills-restoring" role="tabpanel" aria-labelledby="pills-restoring-tab">..rest.</div>
-            <div class="tab-pane fade" id="pills-non-restoring" role="tabpanel" aria-labelledby="pills-non-restoring-tab">..nrest.</div>
+            <div class="tab-pane fade show active" id="pills-booth-radix4" role="tabpanel" aria-labelledby="pills-booth-radix4-tab">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">Q</label>
+                            <input type="number" class="form-control q-input" id="validationCustom01" placeholder="Multiplier" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">M</label>
+                            <input type="number" class="form-control m-input" id="validationCustom02" placeholder="Multiplicand" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustomUsername">Bits</label>
+                            <input type="number" class="form-control bits-input" id="validationCustomUsername" placeholder="Nr of bits" value="8" aria-describedby="inputGroupPrepend"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-primary col-12">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table id="booth-radix4" class="table">
+                        <thead>
+                            <th>A</th>
+                            <th>Q</th>
+                            <th>Q[-1]</th>
+                            <th>COUNT</th>
+                            <th>OP</th>
+                            <th>M</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-booth" role="tabpanel" aria-labelledby="pills-booth-tab">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">Q</label>
+                            <input type="number" class="form-control q-input" id="validationCustom01" placeholder="Multiplier" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">M</label>
+                            <input type="number" class="form-control m-input" id="validationCustom02" placeholder="Multiplicand" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustomUsername">Bits</label>
+                            <input type="number" class="form-control bits-input" id="validationCustomUsername" placeholder="Nr of bits" value="8" aria-describedby="inputGroupPrepend"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-primary col-12">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="booth" class="table">
+                    <thead>
+                        <th>A</th>
+                        <th>Q</th>
+                        <th>Q[-1]</th>
+                        <th>COUNT</th>
+                        <th>OP</th>
+                        <th>M</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-restoring" role="tabpanel" aria-labelledby="pills-restoring-tab">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">Q</label>
+                            <input type="number" class="form-control q-input" id="validationCustom01" placeholder="Dividend" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">M</label>
+                            <input type="number" class="form-control m-input" id="validationCustom02" placeholder="Divisor" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustomUsername">Bits</label>
+                            <input type="number" class="form-control bits-input" id="validationCustomUsername" placeholder="Nr of bits" value="8" aria-describedby="inputGroupPrepend"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-primary col-12">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="division-restoring" class="table">
+                    <thead>
+                        <th>A</th>
+                        <th>Q</th>
+                        <th>COUNT</th>
+                        <th>OP</th>
+                        <th>M</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-non-restoring" role="tabpanel" aria-labelledby="pills-non-restoring-tab">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">Q</label>
+                            <input type="number" class="form-control q-input" id="validationCustom01" placeholder="Dividend" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">M</label>
+                            <input type="number" class="form-control m-input" id="validationCustom02" placeholder="Divisor" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustomUsername">Bits</label>
+                            <input type="number" class="form-control bits-input" id="validationCustomUsername" placeholder="Nr of bits" value="8" aria-describedby="inputGroupPrepend"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-primary col-12">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+                <table id="division-non-restoring" class="table">
+                    <thead>
+                        <th>A</th>
+                        <th>Q</th>
+                        <th>COUNT</th>
+                        <th>OP</th>
+                        <th>M</th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <table id="booth-radix4" class="table table-bordered">
-            <thead>
-                <th>A</th>
-                <th>Q</th>
-                <th>Q[-1]</th>
-                <th>COUNT</th>
-                <th>OP</th>
-                <th>M</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-        <table id="booth" class="table table-bordered">
-            <thead>
-                <th>A</th>
-                <th>Q</th>
-                <th>Q[-1]</th>
-                <th>COUNT</th>
-                <th>OP</th>
-                <th>M</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-
-        <table id="division-restoring" class="table table-bordered">
-            <thead>
-                <th>A</th>
-                <th>Q</th>
-                <th>COUNT</th>
-                <th>OP</th>
-                <th>M</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-
-        <table id="division-non-restoring" class="table table-bordered">
-            <thead>
-                <th>A</th>
-                <th>Q</th>
-                <th>COUNT</th>
-                <th>OP</th>
-                <th>M</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
     </div>
 </body>
 

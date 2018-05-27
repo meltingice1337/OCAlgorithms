@@ -1,4 +1,6 @@
-import { toBinary } from './util';
+import {
+    toBinary
+} from './util';
 
 export function insertBoothRadix4Row(A, Q, QNEG, COUNT, OP, M, shift = false, bits = 8) {
     let row = document.createElement('tr');
@@ -6,7 +8,7 @@ export function insertBoothRadix4Row(A, Q, QNEG, COUNT, OP, M, shift = false, bi
     <td>${toBinary(A, bits + 1)}</td>
     <td>${toBinary(Q, bits)}</td>
     <td>${toBinary(QNEG, 1)}</td>
-    <td>${toBinary(COUNT, bits / 2)}</td>
+    <td>${toBinary(COUNT,Math.log2(bits / 2))}</td>
     <td>${OP}</td>
     <td>${toBinary(M, bits)}</td>
     `;

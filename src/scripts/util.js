@@ -4,6 +4,8 @@ export function toBinary(n, bits = 8) {
     bin = Array(remLen).join('0') + bin;
     if (bin.length > bits && bin.length === 32)
         bin = bin.substr(32 - bits);
+
+    // return bin.split('').reverse().join('').replace(/(\d{4})/g, '$1 ').replace(/(^\s+|\s+$)/, '').split('').reverse('').join(''); // split in 4 bits
     return bin;
 }
 

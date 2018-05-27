@@ -1,5 +1,15 @@
-import { insertBoothRadix4Row, insertBoothRow, insertDivisionRestoringRow, insertDivisionNonRestoringRow } from './renderer';
-import { getLastBits, toBinary, consoleBinaryPrint, fillOnes } from './util';
+import {
+    insertBoothRadix4Row,
+    insertBoothRow,
+    insertDivisionRestoringRow,
+    insertDivisionNonRestoringRow
+} from './renderer';
+import {
+    getLastBits,
+    toBinary,
+    consoleBinaryPrint,
+    fillOnes
+} from './util';
 
 export function runBoothRadix4(M, Q, draw = true, bits = 8) {
     let A = 0;
@@ -7,29 +17,30 @@ export function runBoothRadix4(M, Q, draw = true, bits = 8) {
     let QNEG = 0;
     if (draw) {
         document.querySelector('#booth-radix4 tbody').innerHTML = '';
+        insertBoothRadix4Row(A, Q, QNEG, COUNT, 'initial', M, false, bits);
     }
     do {
         let QT = toBinary(((getLastBits(Q, 2)) << 1) + QNEG, 3);
         if (QT === '001' || QT === '010') {
+            A += M;
             if (draw) {
                 insertBoothRadix4Row(A, Q, QNEG, COUNT, "+M", M, false, bits);
             }
-            A += M;
         } else if (QT === '101' || QT === '110') {
+            A -= M;
             if (draw) {
                 insertBoothRadix4Row(A, Q, QNEG, COUNT, "-M", M), false, bits;
             }
-            A -= M;
         } else if (QT === '011') {
+            A += 2 * M;
             if (draw) {
                 insertBoothRadix4Row(A, Q, QNEG, COUNT, "+2M", M, false, bits);
             }
-            A += 2 * M;
         } else if (QT === '100') {
+            A -= 2 * M;
             if (draw) {
                 insertBoothRadix4Row(A, Q, QNEG, COUNT, "-2M", M, false, bits);
             }
-            A -= 2 * M;
         }
         let shiftAux = getLastBits(A, bits + 1) << bits;
         shiftAux += getLastBits(Q, bits);
@@ -42,7 +53,7 @@ export function runBoothRadix4(M, Q, draw = true, bits = 8) {
         QNEG = shiftAux & 1;
 
         if (draw) {
-            insertBoothRadix4Row(A, Q, QNEG, COUNT, "SHIFT", M, true, bits);
+            insertBoothRadix4Row(A, Q, QNEG, COUNT, "SHIFT right 2 pos", M, true, bits);
         }
     } while (COUNT++ < ((bits / 2) - 1))
     if (A >> bits === 1) {
@@ -60,6 +71,7 @@ export function runBooth(Q, M, draw = true, bits = 8) {
     let COUNT = 0;
     if (draw) {
         document.querySelector('#booth tbody').innerHTML = '';
+        insertBoothRow(A, Q, QNEG, COUNT, 'initial', M, false, bits);
     }
     do {
         let QT = toBinary(((Q & 1) << 1) + QNEG, 2);
