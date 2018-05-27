@@ -1,4 +1,4 @@
 .cache
-dist
+dev
 node_modules
 lib
