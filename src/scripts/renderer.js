@@ -74,8 +74,8 @@ export function insertDivisionRadix4SRTRow(P, q, A, OP, B, lastRowInCount = fals
     let row = document.createElement('tr');
     row.innerHTML = `
     <td>${toBinary(P, bits + 1)}</td>
-    <td>${Array.isArray(q) ? q.slice().reduce((acc, val) => acc += val + ' ', '') : q}</td>
     <td>${toBinary(A, bits)}</td>
+    <td>${Array.isArray(q) ? q.slice().reduce((acc, val) => acc += val + ' ', '') : q}</td>
     <td>${OP}</td>
     <td>${toBinary(B, bits)}</td>
     `;
