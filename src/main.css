@@ -34,3 +34,7 @@ body {
 .table {
     display: none;
 }
+
+#pills-r4-srt tbody tr td:nth-child(2) {
+    white-space: nowrap;
+}
