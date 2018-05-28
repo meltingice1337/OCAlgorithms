@@ -236,7 +236,7 @@ export function runRadix4Srt(A, B, draw = true, bits = 8) {
     P = (PA >> bits) & fillOnes(bits + 1);
     A = PA & fillOnes(bits);
     if (draw) {
-        insertDivisionRadix4SRTRow(P, qArr, A, `LS(B) LS(PA) with ${k}bits(b=${b})`, B, true, bits);
+        insertDivisionRadix4SRTRow(P, qArr, A, `LS(B) LS(PA) ${k} bits (b=${b})`, B, true, bits);
     }
 
     while (i++ < Math.ceil((bits - 1) / 2)) {
@@ -252,7 +252,7 @@ export function runRadix4Srt(A, B, draw = true, bits = 8) {
         P = (PA >> bits) & fillOnes(bits + 1);
         A = PA & fillOnes(bits);
         if (draw) {
-            insertDivisionRadix4SRTRow(P, qArr, A, `LS(PA) with 2 bits`, B, false, bits);
+            insertDivisionRadix4SRTRow(P, qArr, A, `LS(PA) 2 bits`, B, false, bits);
         }
         P = P - (q * B);
         if (draw) {
@@ -269,7 +269,7 @@ export function runRadix4Srt(A, B, draw = true, bits = 8) {
     }
     P = (P & fillOnes(bits + 1)) >> k;
     if (draw) {
-        insertDivisionRadix4SRTRow(P, Q, A, `Final RS(P) correction`, B, true, bits);
+        insertDivisionRadix4SRTRow(P, Q, A, `Final Correction RS(P) ${k} bits`, B, true, bits);
     }
 
     return {
