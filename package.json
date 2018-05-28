@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run compile && mocha --require babel-core/register",
+    "test": "npm run compile && mocha --require babel-core/register ",
     "compile": "babel --presets es2015 -d lib/ src/",
     "build": "rimraf dist && parcel build src/index.html --no-source-maps",
     "start": "parcel src/index.html -d dev/"

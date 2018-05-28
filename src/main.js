@@ -5,19 +5,18 @@ import {
     runBoothRadix4,
     runBooth,
     runRestoring,
-    runNonRestoring
+    runNonRestoring,
+    runRadix4Srt
 } from "./scripts/algorithms";
+import { findDigitsQuotient } from './scripts/util';
 
 document.addEventListener('DOMContentLoaded', function () {
-    // console.log(runBoothRadix4(2, 2, true, 4), 127 * 25);
-    // console.log(runBooth(7, 3, true, 4), 127 * 25);
-    // consoleBinaryPrint([fillOnes(5)]);
-    // console.log(runRestoring(36, 6), 4);
-    // runNonRestoring(11, 3, true, 4);
+
     const boothRadix4Tab = document.querySelector('#pills-booth-radix4');
     const boothTab = document.querySelector('#pills-booth');
     const restoringTab = document.querySelector('#pills-restoring');
     const nonRestoringTab = document.querySelector('#pills-non-restoring');
+    const radix4SRTTab = document.querySelector('#pills-r4-srt');
 
     boothRadix4Tab
         .querySelector('button')
@@ -61,5 +60,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const M = nonRestoringTab.querySelector('.m-input').value;
             const Bits = nonRestoringTab.querySelector('.bits-input').value;
             runNonRestoring(Number(Q), Number(M), true, Number(Bits));
+        });
+
+    radix4SRTTab
+        .querySelector('button')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            radix4SRTTab.querySelector('table').style.display = "table";
+            const A = radix4SRTTab.querySelector('.q-input').value;
+            const B = radix4SRTTab.querySelector('.m-input').value;
+            const Bits = radix4SRTTab.querySelector('.bits-input').value;
+            runRadix4Srt(Number(A), Number(B), true, Number(Bits));
         });
 });

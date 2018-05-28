@@ -30,6 +30,10 @@
                 <a class="nav-link" id="pills-non-restoring-tab" data-toggle="pill" href="#pills-non-restoring" role="tab" aria-controls="pills-non-restoring"
                     aria-selected="false">Non Restoring</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-r4-srt-tab" data-toggle="pill" href="#pills-r4-srt" role="tab" aria-controls="pills-r4-srt"
+                    aria-selected="false">Radix-4 SRT</a>
+            </li>
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-booth-radix4" role="tabpanel" aria-labelledby="pills-booth-radix4-tab">
@@ -94,19 +98,21 @@
                         </div>
                     </div>
                 </form>
-                <table id="booth" class="table">
-                    <thead>
-                        <th>A</th>
-                        <th>Q</th>
-                        <th>Q[-1]</th>
-                        <th>COUNT</th>
-                        <th>OP</th>
-                        <th>M</th>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table id="booth" class="table">
+                        <thead>
+                            <th>A</th>
+                            <th>Q</th>
+                            <th>Q[-1]</th>
+                            <th>COUNT</th>
+                            <th>OP</th>
+                            <th>M</th>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane fade" id="pills-restoring" role="tabpanel" aria-labelledby="pills-restoring-tab">
                 <form>
@@ -131,18 +137,20 @@
                         </div>
                     </div>
                 </form>
-                <table id="division-restoring" class="table">
-                    <thead>
-                        <th>A</th>
-                        <th>Q</th>
-                        <th>COUNT</th>
-                        <th>OP</th>
-                        <th>M</th>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table id="division-restoring" class="table">
+                        <thead>
+                            <th>A</th>
+                            <th>Q</th>
+                            <th>COUNT</th>
+                            <th>OP</th>
+                            <th>M</th>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="tab-pane fade" id="pills-non-restoring" role="tabpanel" aria-labelledby="pills-non-restoring-tab">
                 <form>
@@ -167,18 +175,58 @@
                         </div>
                     </div>
                 </form>
-                <table id="division-non-restoring" class="table">
-                    <thead>
-                        <th>A</th>
-                        <th>Q</th>
-                        <th>COUNT</th>
-                        <th>OP</th>
-                        <th>M</th>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table id="division-non-restoring" class="table">
+                        <thead>
+                            <th>A</th>
+                            <th>Q</th>
+                            <th>COUNT</th>
+                            <th>OP</th>
+                            <th>M</th>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-r4-srt" role="tabpanel" aria-labelledby="pills-r4-srt">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom01">A</label>
+                            <input type="number" class="form-control q-input" id="validationCustom01" placeholder="Dividend" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustom02">B</label>
+                            <input type="number" class="form-control m-input" id="validationCustom02" placeholder="Divisor" value="" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="validationCustomUsername">Bits</label>
+                            <input type="number" class="form-control bits-input" id="validationCustomUsername" placeholder="Nr of bits" value="8" aria-describedby="inputGroupPrepend"
+                                required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <button class="btn btn-primary col-12">Calculate</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <table id="division-r4-srt" class="table">
+                        <thead>
+                            <th>p</th>
+                            <th>Q</th>
+                            <th>A</th>
+                            <th>OP</th>
+                            <th>B</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -186,7 +234,7 @@
     <footer>
         <div class="card">
             <div class="card-body">
-                Proudly presented by
+                Proudly developed by
                 <a href="https://www.linkedin.com/in/darius-flavius-costolas-b5658893/">Darius Costolas</a>
             </div>
         </div>

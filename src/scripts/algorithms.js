@@ -2,13 +2,15 @@ import {
     insertBoothRadix4Row,
     insertBoothRow,
     insertDivisionRestoringRow,
-    insertDivisionNonRestoringRow
+    insertDivisionNonRestoringRow,
+    insertDivisionRadix4SRTRow
 } from './renderer';
 import {
     getLastBits,
     toBinary,
     consoleBinaryPrint,
-    fillOnes
+    fillOnes,
+    findDigitsQuotient
 } from './util';
 
 export function runBoothRadix4(M, Q, draw = true, bits = 8) {
@@ -215,22 +217,63 @@ export function runNonRestoring(Q, M, draw = true, bits = 8) {
 export function runRadix4Srt(A, B, draw = true, bits = 8) {
     let P = 0;
     let k = 0;
-    while ((B & 0x80) != 0) {
+    let i = 0;
+    let qArr = new Array(Math.ceil((bits - 1) / 2));
+    if (draw) {
+        document.querySelector('#division-r4-srt').style.display = 'table';
+        document.querySelector('#division-r4-srt tbody').innerHTML = '';
+        insertDivisionRadix4SRTRow(P, qArr, A, 'initial', B, true, bits);
+    }
+    while ((B >> (bits - 1)) === 0) {
         B = B << 1;
         k++;
     }
-    const b = (B >> (8 - 4)) & 0xF;
-    B = B >> k;
 
-    let PA = (P << 8) + A;
-    PA = PA << K;
-    P = (PA >> 8) & 0XFF;
-    A = PA & 0xFF;
+    const b = ((B & fillOnes(bits)) >> (bits - 4)) & 0xF;
 
-    let q = (P >> (8 - 6)) & 0x3F;
+    let PA = (P << bits) + (A & fillOnes(bits));
+    PA = PA << k;
+    P = (PA >> bits) & fillOnes(bits + 1);
+    A = PA & fillOnes(bits);
+    if (draw) {
+        insertDivisionRadix4SRTRow(P, qArr, A, `LS(B) LS(PA) with ${k}bits(b=${b})`, B, true, bits);
+    }
 
-    PA = (P << 8) + A;
-    PA = PA << q;
-    P = (PA >> 8) & 0XFF;
-    A = PA & 0xFF;
+    while (i++ < Math.ceil((bits - 1) / 2)) {
+        let p = ((P & fillOnes(bits + 1)) >> ((bits + 1) - 6)) & 0x3F;
+        if (((p >> 5) & 1) == 1) {
+            p = p + (fillOnes(26) << 6)
+        }
+        const q = findDigitsQuotient(b, p);
+        qArr.push(q);
+        // console.log(p, q);
+        let PA = (P << bits) + A;
+        PA = PA << 2;
+        P = (PA >> bits) & fillOnes(bits + 1);
+        A = PA & fillOnes(bits);
+        if (draw) {
+            insertDivisionRadix4SRTRow(P, qArr, A, `LS(PA) with 2 bits`, B, false, bits);
+        }
+        P = P - (q * B);
+        if (draw) {
+            insertDivisionRadix4SRTRow(P, qArr, A, `P = P - (${q})*B`, B, true, bits);
+        }
+    }
+    let Q = qArr.reverse().reduce((acc, val, i) => acc += val * Math.pow(4, i));
+    if ((P >> bits) & 1 == 1) {
+        P = P + B;
+        Q = Q - 1;
+        if (draw) {
+            insertDivisionRadix4SRTRow(P, Q, A, `Correct remainder(P+=B) and quotient (q-=1)`, B, true, bits);
+        }
+    }
+    P = (P & fillOnes(bits + 1)) >> k;
+    if (draw) {
+        insertDivisionRadix4SRTRow(P, Q, A, `Final RS(P) correction`, B, true, bits);
+    }
+
+    return {
+        quotient: Q,
+        remainder: P
+    }
 }

@@ -8,7 +8,7 @@ export function insertBoothRadix4Row(A, Q, QNEG, COUNT, OP, M, shift = false, bi
     <td>${toBinary(A, bits + 1)}</td>
     <td>${toBinary(Q, bits)}</td>
     <td>${toBinary(QNEG, 1)}</td>
-    <td>${toBinary(COUNT,Math.log2(bits / 2))}</td>
+    <td>${toBinary(COUNT, Math.log2(bits / 2))}</td>
     <td>${OP}</td>
     <td>${toBinary(M, bits)}</td>
     `;
@@ -69,5 +69,19 @@ export function insertDivisionNonRestoringRow(A, Q, COUNT, OP, M, lastRowInCount
         row.classList.add('has-underline');
     }
     document.querySelector('#division-non-restoring tbody').appendChild(row);
+}
+export function insertDivisionRadix4SRTRow(P, q, A, OP, B, lastRowInCount = false, bits = 8) {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+    <td>${toBinary(P, bits + 1)}</td>
+    <td>${Array.isArray(q) ? q.slice().reduce((acc, val) => acc += val + ' ', '') : q}</td>
+    <td>${toBinary(A, bits)}</td>
+    <td>${OP}</td>
+    <td>${toBinary(B, bits)}</td>
+    `;
 
+    if (lastRowInCount) {
+        row.classList.add('has-underline');
+    }
+    document.querySelector('#division-r4-srt tbody').appendChild(row);
 }
