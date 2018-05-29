@@ -35,6 +35,7 @@ body {
     display: none;
 }
 
-#pills-r4-srt tbody tr td:nth-child(3) {
+#pills-r4-srt tbody tr td:nth-child(3),
+#pills-r2-srt tbody tr td:nth-child(4) {
     white-space: nowrap;
 }

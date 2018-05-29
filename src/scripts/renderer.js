@@ -85,3 +85,20 @@ export function insertDivisionRadix4SRTRow(P, q, A, OP, B, lastRowInCount = fals
     }
     document.querySelector('#division-r4-srt tbody').appendChild(row);
 }
+
+export function insertDivisionRadix2SRTRow(COUNT, P, q, A, OP, B, lastRowInCount = false, bits = 8) {
+    let row = document.createElement('tr');
+    row.innerHTML = `
+    <td>${toBinary(COUNT, Math.log2(bits))}</td>
+    <td>${toBinary(P, bits + 1)}</td>
+    <td>${toBinary(A, bits)}</td>
+    <td>${Array.isArray(q) ? q.slice().reduce((acc, val) => acc += val + ' ', '') : q}</td>
+    <td>${OP}</td>
+    <td>${toBinary(B, bits)}</td>
+    `;
+
+    if (lastRowInCount) {
+        row.classList.add('has-underline');
+    }
+    document.querySelector('#division-r2-srt tbody').appendChild(row);
+}

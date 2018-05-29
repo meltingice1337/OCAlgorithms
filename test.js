@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 const expect = require('chai').expect;
-import { runBooth, runBoothRadix4, runRestoring, runNonRestoring, runRadix4Srt } from './src/scripts/algorithms';
+import { runBooth, runBoothRadix4, runRestoring, runNonRestoring, runRadix4Srt, runRadix2Srt } from './src/scripts/algorithms';
 describe('Booth RADIX-4', function () {
     it('Calculates the correct answer', function () {
         for (let i = 0; i < 10000; i++) {
@@ -58,6 +58,19 @@ describe('Divsion RADIX-4 SRT', function () {
             let M = randomNumber(1, 300, true);
 
             let value = runRadix4Srt(Q, M, false, 10);
+            expect(value.quotient, `Invalid Quotient; Q=${Q};M=${M}`).to.equal(Math.floor(Q / M));
+            expect(value.remainder, `Invalid Remainder; Q=${Q};M=${M}`).to.equal(Q % M);
+        }
+    });
+});
+
+describe('Divsion RADIX-2 SRT', function () {
+    it('Calculates the correct answer', function () {
+        for (let i = 0; i < 10000; i++) {
+            let Q = randomNumber(1, 100, true);
+            let M = randomNumber(1, 100, true);
+
+            let value = runRadix2Srt(Q, M, false, 8);
             expect(value.quotient, `Invalid Quotient; Q=${Q};M=${M}`).to.equal(Math.floor(Q / M));
             expect(value.remainder, `Invalid Remainder; Q=${Q};M=${M}`).to.equal(Q % M);
         }

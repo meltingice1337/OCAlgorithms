@@ -6,7 +6,8 @@ import {
     runBooth,
     runRestoring,
     runNonRestoring,
-    runRadix4Srt
+    runRadix4Srt,
+    runRadix2Srt
 } from "./scripts/algorithms";
 import { findDigitsQuotient } from './scripts/util';
 
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const restoringTab = document.querySelector('#pills-restoring');
     const nonRestoringTab = document.querySelector('#pills-non-restoring');
     const radix4SRTTab = document.querySelector('#pills-r4-srt');
+    const radix2SRTTab = document.querySelector('#pills-r2-srt');
 
     boothRadix4Tab
         .querySelector('button')
@@ -71,5 +73,16 @@ document.addEventListener('DOMContentLoaded', function () {
             const B = radix4SRTTab.querySelector('.m-input').value;
             const Bits = radix4SRTTab.querySelector('.bits-input').value;
             runRadix4Srt(Number(A), Number(B), true, Number(Bits));
+        });
+
+        radix2SRTTab
+        .querySelector('button')
+        .addEventListener('click', function (e) {
+            e.preventDefault();
+            radix2SRTTab.querySelector('table').style.display = "table";
+            const A = radix2SRTTab.querySelector('.q-input').value;
+            const B = radix2SRTTab.querySelector('.m-input').value;
+            const Bits = radix2SRTTab.querySelector('.bits-input').value;
+            runRadix2Srt(Number(A), Number(B), true, Number(Bits));
         });
 });
