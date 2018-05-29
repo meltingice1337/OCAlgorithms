@@ -289,7 +289,7 @@ export function runRadix2Srt(A, B, draw = true, bits = 8) {
         document.querySelector('#division-r2-srt tbody').innerHTML = '';
         insertDivisionRadix2SRTRow(i, P, qArr, A, 'initial', B, true, bits);
     }
-    while ((B >> (bits - 1)) & 1 === 0) {
+    while ((B >> (bits - 1)) === 0) {
         B = B << 1;
         k++;
     }
