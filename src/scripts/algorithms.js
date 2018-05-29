@@ -67,7 +67,7 @@ export function runBoothRadix4(M, Q, draw = true, bits = 8) {
     }
 }
 
-export function runBooth(Q, M, draw = true, bits = 8) {
+export function runBooth(M, Q, draw = true, bits = 8) {
     let A = 0;
     let QNEG = 0;
     let COUNT = 0;
