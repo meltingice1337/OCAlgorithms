@@ -247,7 +247,6 @@ export function runRadix4Srt(A, B, draw = true, bits = 8) {
         }
         const q = findDigitsQuotient(b, p);
         qArr.push(q);
-        // console.log(p, q);
         let PA = (P << bits) + A;
         PA = PA << 2;
         P = (PA >> bits) & fillOnes(bits + 1);
@@ -302,8 +301,7 @@ export function runRadix2Srt(A, B, draw = true, bits = 8) {
         insertDivisionRadix2SRTRow(i, P, qArr, A, `LS(B) LS(PA) ${k} bits`, B, true, bits);
     }
     do {
-        let p = (P >> (bits - 3)) & 0x7;
-        consoleBinaryPrint([p, 3])
+        let p = (P >> (bits - 2)) & 0x7;
         if (p === 0x7 || p === 0x0) {
             qArr.push(0);
             let PA = (P << bits) + (A & fillOnes(bits));
@@ -312,8 +310,9 @@ export function runRadix2Srt(A, B, draw = true, bits = 8) {
             A = PA & fillOnes(bits);
             if (draw) {
                 insertDivisionRadix2SRTRow(i, P, qArr, A, `LS(PA) 1 bits ALL EQUAL`, B, true, bits);
+
             }
-        } else if (p >> 2 === 1) {
+        } else if ((p >> 2) & 1 === 1) {
             qArr.push(-1);
 
             let PA = (P << bits) + (A & fillOnes(bits));
@@ -358,7 +357,6 @@ export function runRadix2Srt(A, B, draw = true, bits = 8) {
         insertDivisionRadix2SRTRow(i, P, Q, A, `CORRECTION, RS(P) ${k}bits`, B, false, bits);
     }
 
-    console.log(Q, P);
     return {
         quotient: Q,
         remainder: P
